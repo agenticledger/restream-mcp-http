@@ -1,6 +1,6 @@
 # Restream MCP full release
 
-Started: 2026-10-09. Status: 56-tool implementation built and hosted on Railway; final site publication and custom DNS pending.
+Started: 2026-10-09. Status: 56-tool implementation built and hosted on Railway; demo site published; custom DNS and private API proof pending.
 
 ## Plan
 
@@ -76,9 +76,9 @@ Documentation checked 2026-10-09; inventory completed for the 56 implemented too
 - [x] GitHub repository
 - [x] Railway deployment and health verification
 - [ ] Custom domain and TLS verification
-- [ ] MCPLive registry, docs, ZIP, build and publication
+- [x] MCPLive registry, docs, ZIP, build and publication
 - [x] Live public read-only provider proof (private reads remain pending)
-- [ ] Platform handoff
+- [x] Platform handoff prepared for the owner (registration is performed by @hub)
 
 Tool count: 56 (39 read, 17 write; includes 2 bounded WebSocket observers).
 
@@ -109,3 +109,7 @@ Keep the verified Railway endpoint in site/registration until custom DNS and TLS
 
 Bind the agent's existing Restream connection to namespace restream-mcp-prod, principal <instanceId>:<agentId>. Gateway must sign X-Broker-Principal with HMAC-SHA256/base64url using BROKER_PRINCIPAL_HMAC_KEY provisioned through secret configuration. No unsigned principal or shared fallback is accepted. A standalone client instead retains its private random 32-byte base64url Bearer identity. Broker install identity is gitignored in the HTTP project's .env (0600); do not include it in ZIPs or handoff text.
 
+
+## Final publication verification
+
+HTTP commit 4e87313 deployed successfully as Railway deployment d0fba9e4-4fc9-46bd-9433-69d42b361165. MCPLive commit b65bd51 deployed successfully; public docs, tools.json, and ZIP returned HTTP 200. Downloaded ZIP integrity passed. Published browser checks showed all 56 tools, no JS errors, and no horizontal overflow at 1365px and 390px. The demo domain currently responds through Railway despite older workspace documentation describing Cloudflare Pages. Custom-domain verification remains false.
