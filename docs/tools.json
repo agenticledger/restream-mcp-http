@@ -681,7 +681,7 @@
     "write": true,
     "example": {
       "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
-      "destinationId": "example"
+      "destinationId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
     },
     "mock": {
       "status": "ok",
@@ -1597,7 +1597,8 @@
       "secondaryText"
     ],
     "example": {
-      "captionId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+      "captionId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "text": "Updated caption"
     },
     "mock": {
       "status": "ok",
@@ -2042,7 +2043,8 @@
       "shouldShowTitle"
     ],
     "example": {
-      "qrCodeId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+      "qrCodeId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "title": "Updated title"
     },
     "mock": {
       "status": "ok",

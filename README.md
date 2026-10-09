@@ -18,7 +18,7 @@ Live stdio needs `BROKER_BASE_URL`, `BROKER_CLIENT_NAMESPACE`, `BROKER_INSTALL_B
 
 ## Hosted HTTP
 
-Endpoint: `https://restreammcp.agenticledger.ai/mcp` (deployment evidence in BUILD_CHECKLIST.md).
+Verified endpoint: `https://restream-mcp-http-production.up.railway.app/mcp`. Custom domain `restreammcp.agenticledger.ai` awaits DNS verification (see BUILD_CHECKLIST.md).
 
 Set the broker installation variables before starting `npm run start:http`. Set `HOST=0.0.0.0` for Railway; local default is `127.0.0.1`. `GET /health` reports configuration, write flag, mode, and tool count. No OAuth callback or authorization-server metadata is served.
 

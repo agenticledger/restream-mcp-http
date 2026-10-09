@@ -49,8 +49,8 @@ export class RestreamClient {
     const req = requestFor(tool, args);
     if (
       !req.path.startsWith("/v2/") ||
-      req.path.includes("..") ||
-      req.path.includes("\\")
+      req.path.split("?")[0].includes("..") ||
+      req.path.split("?")[0].includes("\\")
     )
       throw new SafeError("invalid_path", "Invalid API path.");
     const url = new URL(req.path, "https://api.restream.io");
