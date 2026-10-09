@@ -1,0 +1,2209 @@
+[
+  {
+    "name": "restream_list_platforms",
+    "description": "List supported streaming platforms. Public endpoint.",
+    "path": "/v2/platform/all",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "public",
+    "docs": "https://developers.restream.io/public-api/platforms",
+    "method": "GET",
+    "public": true,
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_platforms",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_ingest_servers",
+    "description": "List available RTMP ingest servers. Public endpoint.",
+    "path": "/v2/server/all",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "public",
+    "docs": "https://developers.restream.io/public-api/servers",
+    "method": "GET",
+    "public": true,
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_ingest_servers",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_profile",
+    "description": "Read the connected Restream profile.",
+    "path": "/v2/user/profile",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "profile.read",
+    "docs": "https://developers.restream.io/private-api/profile",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "id": 100,
+        "username": "mock-user",
+        "email": "mock@example.invalid"
+      }
+    }
+  },
+  {
+    "name": "restream_get_selected_ingest",
+    "description": "Read the selected ingest server ID.",
+    "path": "/v2/user/ingest",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "channels.read",
+    "docs": "https://developers.restream.io/private-api/selected-ingest",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_selected_ingest",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_stream_key",
+    "description": "Retrieve sensitive encoder stream key and SRT URL; do not publish the result.",
+    "path": "/v2/user/streamKey",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/private-api/stream-key",
+    "method": "GET",
+    "sensitive": true,
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_stream_key",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_chat_url",
+    "description": "Retrieve the sensitive chat embed URL; do not publish the result.",
+    "path": "/v2/user/webchat/url",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "chat.read",
+    "docs": "https://developers.restream.io/private-api/chat-url",
+    "method": "GET",
+    "sensitive": true,
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_chat_url",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_channels",
+    "description": "List channels connected to the Restream account.",
+    "path": "/v2/user/channels",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "channels.read",
+    "docs": "https://developers.restream.io/channels/channels",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "channels": [
+          {
+            "id": 123456,
+            "platformId": 29,
+            "displayName": "Mock RTMP",
+            "channelUrl": "https://example.invalid/live"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "restream_get_channel",
+    "description": "Read a channel by numeric ID.",
+    "path": "/v2/user/channels/{channelId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "channelId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "channels.read",
+    "docs": "https://developers.restream.io/channels/channel",
+    "method": "GET",
+    "example": {
+      "channelId": 1
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_channel",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_create_channel",
+    "description": "Add a supported manually configured channel. Sends stream credentials to Restream. Writes must be enabled.",
+    "path": "/v2/user/channels",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "platformId": {
+          "type": "number",
+          "enum": [
+            29,
+            37,
+            49,
+            60,
+            61,
+            68,
+            72,
+            73,
+            74,
+            78,
+            79,
+            80,
+            81,
+            82
+          ]
+        },
+        "streamUrl": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 2048
+        },
+        "streamKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "displayName": {
+          "$ref": "#/properties/streamKey"
+        },
+        "rtmpUsername": {
+          "$ref": "#/properties/streamKey"
+        },
+        "rtmpPassword": {
+          "$ref": "#/properties/streamKey"
+        },
+        "instagramUsername": {
+          "$ref": "#/properties/streamKey"
+        }
+      },
+      "required": [
+        "platformId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "channels.write",
+    "docs": "https://developers.restream.io/channels/channel-add",
+    "method": "POST",
+    "write": true,
+    "body": [
+      "platformId",
+      "streamUrl",
+      "streamKey",
+      "displayName",
+      "rtmpUsername",
+      "rtmpPassword",
+      "instagramUsername"
+    ],
+    "example": {
+      "platformId": 29,
+      "streamUrl": "rtmp://example.com/live"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_create_channel",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_delete_channel",
+    "description": "Delete a channel; this can interrupt delivery to upcoming or live destinations.",
+    "path": "/v2/user/channels/{channelId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "channelId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "channels.write",
+    "docs": "https://developers.restream.io/channels/channel-delete",
+    "method": "DELETE",
+    "write": true,
+    "example": {
+      "channelId": 1
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "success": true
+      }
+    }
+  },
+  {
+    "name": "restream_list_upcoming_events",
+    "description": "List upcoming events, optionally filtering source (1 Studio, 2 encoder, 3 video) and scheduled state.",
+    "path": "/v2/user/events/upcoming",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "scheduled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/events/upcoming-events",
+    "method": "GET",
+    "query": [
+      "source",
+      "scheduled"
+    ],
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_upcoming_events",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_in_progress_events",
+    "description": "List events currently in progress.",
+    "path": "/v2/user/events/in-progress",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/events/in-progress-events",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_in_progress_events",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_event_history",
+    "description": "List one page of finished and missed events. Increase page to continue; server caps limit at 100.",
+    "path": "/v2/user/events/history",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 100000,
+          "exclusiveMinimum": 0,
+          "default": 1
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 100,
+          "exclusiveMinimum": 0,
+          "default": 20
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/events/events-history",
+    "method": "GET",
+    "query": [
+      "page",
+      "limit"
+    ],
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_event_history",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_event",
+    "description": "Read event metadata and destinations.",
+    "path": "/v2/user/events/{eventId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/events/event",
+    "method": "GET",
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_event",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_create_event",
+    "description": "Create Studio, encoder or stored-video event. Does not start streaming or add destinations.",
+    "path": "/v2/user/events/new",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "streamType": {
+          "type": "string",
+          "enum": [
+            "studio",
+            "encoder",
+            "file"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        },
+        "scheduledFor": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fileId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "loopsCount": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9
+        }
+      },
+      "required": [
+        "streamType"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.write",
+    "docs": "https://developers.restream.io/events/event-create",
+    "method": "POST",
+    "write": true,
+    "body": [
+      "streamType",
+      "title",
+      "description",
+      "scheduledFor",
+      "fileId",
+      "loopsCount"
+    ],
+    "example": {
+      "streamType": "studio"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_create_event",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_add_event_destination",
+    "description": "Attach a supported channel; YouTube/Embed Player require title. createEventPost may publish a scheduled broadcast externally. Facebook, Instagram, TikTok, LinkedIn and X are not supported by this endpoint.",
+    "path": "/v2/user/events/{eventId}/destinations",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "channelId": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "exclusiveMinimum": 0
+        },
+        "streamingOrientation": {
+          "type": "string",
+          "enum": [
+            "horizontal",
+            "vertical"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        },
+        "privacyStatus": {
+          "type": "string",
+          "enum": [
+            "private",
+            "public",
+            "unlisted"
+          ]
+        },
+        "videoCategoryId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "latencyPreference": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "low",
+            "ultraLow"
+          ]
+        },
+        "useEmbeddedClosedCaptions": {
+          "type": "boolean"
+        },
+        "createEventPost": {
+          "type": "boolean"
+        },
+        "reuseExistingBroadcastId": {
+          "$ref": "#/properties/videoCategoryId"
+        },
+        "enableMonetization": {
+          "type": "boolean"
+        },
+        "adsFrequency": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      },
+      "required": [
+        "eventId",
+        "channelId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.write",
+    "docs": "https://developers.restream.io/events/event-destination-add",
+    "method": "POST",
+    "write": true,
+    "body": [
+      "channelId",
+      "streamingOrientation",
+      "title",
+      "description",
+      "privacyStatus",
+      "videoCategoryId",
+      "latencyPreference",
+      "useEmbeddedClosedCaptions",
+      "createEventPost",
+      "reuseExistingBroadcastId",
+      "enableMonetization",
+      "adsFrequency"
+    ],
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "channelId": 1
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_add_event_destination",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_delete_event_destination",
+    "description": "Detach a destination from a scheduled event. Cannot detach from live or finished events; keeps the channel.",
+    "path": "/v2/user/events/{eventId}/destinations/{destinationId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "destinationId": {
+          "$ref": "#/properties/eventId"
+        }
+      },
+      "required": [
+        "eventId",
+        "destinationId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.write",
+    "docs": "https://developers.restream.io/events/event-destination-delete",
+    "method": "DELETE",
+    "write": true,
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "destinationId": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "success": true
+      }
+    }
+  },
+  {
+    "name": "restream_get_event_stream_key",
+    "description": "Retrieve sensitive event stream key and SRT URL.",
+    "path": "/v2/user/events/{eventId}/streamKey",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/events/event-stream-key",
+    "method": "GET",
+    "sensitive": true,
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_event_stream_key",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_event_srt_keys",
+    "description": "Retrieve sensitive event SRT keys; requires Business or Enterprise plan.",
+    "path": "/v2/user/events/{eventId}/srt/streamKey",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/events/event-srt-stream-keys",
+    "method": "GET",
+    "sensitive": true,
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_event_srt_keys",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_event_recordings",
+    "description": "List video and audio recordings and expiry times.",
+    "path": "/v2/user/events/{eventId}/recordings",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "storage.read",
+    "docs": "https://developers.restream.io/events/events-recordings",
+    "method": "GET",
+    "sensitive": false,
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_event_recordings",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_event_transcripts",
+    "description": "List generated transcript status and temporary download URLs; does not create transcripts.",
+    "path": "/v2/user/events/{eventId}/recordings/transcriptions",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "storage.read",
+    "docs": "https://developers.restream.io/events/events-recording-transcriptions",
+    "method": "GET",
+    "sensitive": false,
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "transcriptions": [
+          {
+            "id": "7f3c9a4e-1b2d-4c5f-8a6b-9d0e1f2a3b4c",
+            "status": "Completed",
+            "fileName": "mock-recording.mp4",
+            "downloadUrl": "https://example.invalid/mock-transcript.txt"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "restream_get_viewer_analytics",
+    "description": "Read aggregate and per-channel viewer analytics. 404 can mean no stream analytics.",
+    "path": "/v2/user/events/{eventId}/analytics/viewers",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/analytics/event-analytics-viewers",
+    "method": "GET",
+    "sensitive": false,
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_viewer_analytics",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_chat_analytics",
+    "description": "Read aggregate and per-channel chat metrics.",
+    "path": "/v2/user/events/{eventId}/analytics/messages",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/analytics/event-analytics-messages",
+    "method": "GET",
+    "sensitive": false,
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_chat_analytics",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_event_chat_history",
+    "description": "Read a page of chat messages. Pass either pageToken or timestamp, never both. Return cursors are preserved.",
+    "path": "/v2/user/events/{eventId}/chat/history",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 1000,
+          "exclusiveMinimum": 0,
+          "default": 100
+        },
+        "pageToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "timestamp": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "chat.read",
+    "docs": "https://developers.restream.io/events/event-chat-history",
+    "method": "GET",
+    "query": [
+      "pageSize",
+      "pageToken",
+      "timestamp"
+    ],
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_event_chat_history",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_chat_export_url",
+    "description": "Generate a one-time chat history download link; does not fetch external content.",
+    "path": "/v2/user/events/{eventId}/chat/history/download-url",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "eventId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "chat.read",
+    "docs": "https://developers.restream.io/events/events-chat-history-download-url",
+    "method": "POST",
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_chat_export_url",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_recording_download_url",
+    "description": "Generate a temporary download URL for a recording filename returned by list_event_recordings.",
+    "path": "/v2/user/events/{eventId}/recordings/download-url",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "fileName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      },
+      "required": [
+        "eventId",
+        "fileName"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "storage.read",
+    "docs": "https://developers.restream.io/events/events-recording-download-url",
+    "method": "POST",
+    "body": [
+      "fileName"
+    ],
+    "example": {
+      "eventId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "fileName": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_recording_download_url",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_storage_files",
+    "description": "List video storage files and processing status.",
+    "path": "/v2/user/storage/files",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "storage.read",
+    "docs": "https://developers.restream.io/storage/storage-files",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_storage_files",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_storage_file",
+    "description": "Read a video storage file by ID.",
+    "path": "/v2/user/storage/files/{fileId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "fileId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "storage.read",
+    "docs": "https://developers.restream.io/storage/storage-file",
+    "method": "GET",
+    "example": {
+      "fileId": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_storage_file",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_storage_download_url",
+    "description": "Generate a temporary storage file download URL.",
+    "path": "/v2/user/storage/files/{fileId}/download-url",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "fileId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "storage.read",
+    "docs": "https://developers.restream.io/storage/storage-file-download-url",
+    "method": "POST",
+    "example": {
+      "fileId": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_storage_download_url",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_clip_projects",
+    "description": "List a page of clip projects; use returned nextCursor to continue.",
+    "path": "/v2/user/clips/projects",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 100,
+          "exclusiveMinimum": 0,
+          "default": 20
+        },
+        "cursor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "sortBy": {
+          "type": "string",
+          "enum": [
+            "CreatedAt",
+            "LastActivity"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "clips.read",
+    "docs": "https://developers.restream.io/clips/clips-projects",
+    "method": "GET",
+    "query": [
+      "limit",
+      "cursor",
+      "sortBy"
+    ],
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_clip_projects",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_clip_project",
+    "description": "Read clip generation progress, clips and posting history.",
+    "path": "/v2/user/clips/projects/{projectId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "projectId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "clips.read",
+    "docs": "https://developers.restream.io/clips/clips-project-details",
+    "method": "GET",
+    "example": {
+      "projectId": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_clip_project",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_clip_download_url",
+    "description": "Retrieve a temporary clip download URL.",
+    "path": "/v2/user/clips/{clipId}/download",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "clipId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "clipId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "clips.read",
+    "docs": "https://developers.restream.io/clips/clips-download",
+    "method": "GET",
+    "example": {
+      "clipId": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_clip_download_url",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_create_clip_project",
+    "description": "Generate clips asynchronously from a stored file, past event or public video URL. Can consume plan allowance; forceReprocess regenerates clips. Poll get_clip_project.",
+    "path": "/v2/user/clips/projects",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "sourceType": {
+          "type": "string",
+          "enum": [
+            "VideoStorageFile",
+            "Event",
+            "PublicUrl"
+          ]
+        },
+        "videoStorageFileId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "eventId": {
+          "$ref": "#/properties/videoStorageFileId"
+        },
+        "publicUrl": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 2048
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "singleClipMode": {
+          "type": "boolean"
+        },
+        "forceReprocess": {
+          "type": "boolean"
+        },
+        "selectedTimeRange": {
+          "type": "object",
+          "properties": {
+            "startOffsetSeconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "endOffsetSeconds": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "startOffsetSeconds",
+            "endOffsetSeconds"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "sourceType"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "clips.write",
+    "docs": "https://developers.restream.io/clips/clips-project-create",
+    "method": "POST",
+    "write": true,
+    "body": [
+      "sourceType",
+      "videoStorageFileId",
+      "eventId",
+      "publicUrl",
+      "title",
+      "singleClipMode",
+      "forceReprocess",
+      "selectedTimeRange"
+    ],
+    "example": {
+      "sourceType": "VideoStorageFile",
+      "videoStorageFileId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_create_clip_project",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_brands",
+    "description": "List Studio brands.",
+    "path": "/v2/user/studio/brands",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/brands/studio-brands",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_brands",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_fonts",
+    "description": "List Studio fonts.",
+    "path": "/v2/user/studio/fonts",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/fonts/studio-fonts",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_fonts",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_countdown_music",
+    "description": "List Studio countdown music.",
+    "path": "/v2/user/studio/audio/countdown-music",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/audio/studio-audio-countdown-music",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_countdown_music",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_audio_backgrounds",
+    "description": "List Studio audio backgrounds.",
+    "path": "/v2/user/studio/audio-backgrounds",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/audio/studio-audio-backgrounds",
+    "method": "GET",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_audio_backgrounds",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_captions",
+    "description": "List Studio captions, optionally by brand.",
+    "path": "/v2/user/studio/captions",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "brandId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/captions/studio-captions",
+    "method": "GET",
+    "query": [
+      "brandId"
+    ],
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_captions",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_caption",
+    "description": "Read a Studio caption.",
+    "path": "/v2/user/studio/captions/{captionId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "captionId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "captionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/captions/studio-caption",
+    "method": "GET",
+    "example": {
+      "captionId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_caption",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_create_caption",
+    "description": "Create a reusable Studio caption. Does not toggle it on screen.",
+    "path": "/v2/user/studio/captions",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "brandId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        },
+        "secondaryText": {
+          "type": "string",
+          "maxLength": 10000
+        }
+      },
+      "required": [
+        "brandId",
+        "text"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/captions/studio-caption-create",
+    "method": "POST",
+    "write": true,
+    "body": [
+      "brandId",
+      "text",
+      "secondaryText"
+    ],
+    "example": {
+      "brandId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "text": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_create_caption",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_update_caption",
+    "description": "Update a Studio caption.",
+    "path": "/v2/user/studio/captions/{captionId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "captionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        },
+        "secondaryText": {
+          "type": "string",
+          "maxLength": 10000
+        }
+      },
+      "required": [
+        "captionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/captions/studio-caption-update",
+    "method": "PATCH",
+    "write": true,
+    "body": [
+      "text",
+      "secondaryText"
+    ],
+    "example": {
+      "captionId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_update_caption",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_delete_caption",
+    "description": "Permanently delete a Studio caption.",
+    "path": "/v2/user/studio/captions/{captionId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "captionId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "captionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/captions/studio-caption-delete",
+    "method": "DELETE",
+    "write": true,
+    "example": {
+      "captionId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "success": true
+      }
+    }
+  },
+  {
+    "name": "restream_list_tickers",
+    "description": "List Studio tickers, optionally by brand.",
+    "path": "/v2/user/studio/tickers",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "brandId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/tickers/studio-tickers",
+    "method": "GET",
+    "query": [
+      "brandId"
+    ],
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_tickers",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_ticker",
+    "description": "Read a Studio ticker.",
+    "path": "/v2/user/studio/tickers/{tickerId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "tickerId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "tickerId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/tickers/studio-ticker",
+    "method": "GET",
+    "example": {
+      "tickerId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_ticker",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_create_ticker",
+    "description": "Create a reusable Studio ticker. Does not toggle it on screen.",
+    "path": "/v2/user/studio/tickers",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "brandId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        }
+      },
+      "required": [
+        "brandId",
+        "text"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/tickers/studio-ticker-create",
+    "method": "POST",
+    "write": true,
+    "body": [
+      "brandId",
+      "text"
+    ],
+    "example": {
+      "brandId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "text": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_create_ticker",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_update_ticker",
+    "description": "Update a Studio ticker.",
+    "path": "/v2/user/studio/tickers/{tickerId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "tickerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        }
+      },
+      "required": [
+        "tickerId",
+        "text"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/tickers/studio-ticker-update",
+    "method": "PATCH",
+    "write": true,
+    "body": [
+      "text"
+    ],
+    "example": {
+      "tickerId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "text": "example"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_update_ticker",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_delete_ticker",
+    "description": "Permanently delete a Studio ticker.",
+    "path": "/v2/user/studio/tickers/{tickerId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "tickerId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "tickerId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/tickers/studio-ticker-delete",
+    "method": "DELETE",
+    "write": true,
+    "example": {
+      "tickerId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "success": true
+      }
+    }
+  },
+  {
+    "name": "restream_reorder_tickers",
+    "description": "Set the order of Studio tickers.",
+    "path": "/v2/user/studio/tickers/order",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      },
+      "required": [
+        "ids"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/tickers/studio-ticker-reorder",
+    "method": "PATCH",
+    "write": true,
+    "body": [
+      "ids"
+    ],
+    "example": {
+      "ids": [
+        "2527849f-f961-4b1d-8ae0-8eae4f068327"
+      ]
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_reorder_tickers",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_list_qr_codes",
+    "description": "List Studio qr-codes, optionally by brand.",
+    "path": "/v2/user/studio/qr-codes",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "brandId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/qr-codes/studio-qr-codes",
+    "method": "GET",
+    "query": [
+      "brandId"
+    ],
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_list_qr_codes",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_get_qr_code",
+    "description": "Read a Studio qr code.",
+    "path": "/v2/user/studio/qr-codes/{qrCodeId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "qrCodeId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "qrCodeId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.read",
+    "docs": "https://developers.restream.io/studio/qr-codes/studio-qr-code",
+    "method": "GET",
+    "example": {
+      "qrCodeId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_get_qr_code",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_create_qr_code",
+    "description": "Create a reusable Studio qr code. Does not toggle it on screen.",
+    "path": "/v2/user/studio/qr-codes",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "brandId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "link": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 2048
+        },
+        "shouldShowTitle": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "brandId",
+        "title",
+        "link"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/qr-codes/studio-qr-code-create",
+    "method": "POST",
+    "write": true,
+    "body": [
+      "brandId",
+      "title",
+      "link",
+      "shouldShowTitle"
+    ],
+    "example": {
+      "brandId": "2527849f-f961-4b1d-8ae0-8eae4f068327",
+      "title": "example",
+      "link": "https://example.com"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_create_qr_code",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_update_qr_code",
+    "description": "Update a Studio qr code.",
+    "path": "/v2/user/studio/qr-codes/{qrCodeId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "qrCodeId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "link": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 2048
+        },
+        "shouldShowTitle": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "qrCodeId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/qr-codes/studio-qr-code-update",
+    "method": "PATCH",
+    "write": true,
+    "body": [
+      "title",
+      "link",
+      "shouldShowTitle"
+    ],
+    "example": {
+      "qrCodeId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_update_qr_code",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_delete_qr_code",
+    "description": "Permanently delete a Studio qr code.",
+    "path": "/v2/user/studio/qr-codes/{qrCodeId}",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "qrCodeId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "qrCodeId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/qr-codes/studio-qr-code-delete",
+    "method": "DELETE",
+    "write": true,
+    "example": {
+      "qrCodeId": "2527849f-f961-4b1d-8ae0-8eae4f068327"
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "success": true
+      }
+    }
+  },
+  {
+    "name": "restream_reorder_qr_codes",
+    "description": "Set the order of Studio qr-codes.",
+    "path": "/v2/user/studio/qr-codes/order",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      },
+      "required": [
+        "ids"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "studio.write",
+    "docs": "https://developers.restream.io/studio/qr-codes/studio-qr-code-reorder",
+    "method": "PATCH",
+    "write": true,
+    "body": [
+      "ids"
+    ],
+    "example": {
+      "ids": [
+        "2527849f-f961-4b1d-8ae0-8eae4f068327"
+      ]
+    },
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "fixture": true,
+        "tool": "restream_reorder_qr_codes",
+        "notice": "Synthetic offline response; not live provider data."
+      }
+    }
+  },
+  {
+    "name": "restream_observe_chat",
+    "description": "Collect a bounded window of chat WebSocket events, then disconnect. No background subscription or message sending.",
+    "path": "",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "durationSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "default": 5
+        },
+        "maxEvents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 25
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "chat.read",
+    "docs": "https://developers.restream.io/chat/getting-started",
+    "method": "GET",
+    "socket": "chat",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "events": [],
+        "truncated": false
+      }
+    }
+  },
+  {
+    "name": "restream_observe_streaming",
+    "description": "Collect a bounded window of streaming WebSocket events, then disconnect. No background subscription or message sending.",
+    "path": "",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "durationSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "default": 5
+        },
+        "maxEvents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 25
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "scope": "stream.read",
+    "docs": "https://developers.restream.io/private-api/streaming-updates",
+    "method": "GET",
+    "socket": "streaming",
+    "example": {},
+    "mock": {
+      "status": "ok",
+      "mode": "mock",
+      "data": {
+        "events": [],
+        "truncated": false
+      }
+    }
+  }
+]

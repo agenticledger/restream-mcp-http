@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Restream MCP — Finance MCPs Hub</title><style>
+:root{--bg-primary:#0a0e1a;--bg-secondary:#0f1629;--bg-card:#111827;--bg-code:#0d1117;--text-primary:#f1f5f9;--text-secondary:#aab8cb;--accent-green:#4ade80;--border-color:#2a3850}*{box-sizing:border-box}body{margin:0;background:var(--bg-primary);color:var(--text-primary);font:15px/1.65 Inter,-apple-system,BlinkMacSystemFont,sans-serif}main{max-width:1100px;margin:auto;padding:52px 28px}a{color:var(--accent-green)}nav{display:flex;gap:24px;flex-wrap:wrap;font-size:13px}header{padding:48px 0;border-bottom:1px solid var(--border-color)}.eyebrow{color:var(--accent-green);letter-spacing:.12em;text-transform:uppercase;font-size:12px}h1{font-size:clamp(44px,7vw,80px);line-height:1.1;margin:18px 0}header p{max-width:680px;font-size:19px;color:var(--text-secondary)}h2{font-size:28px;margin-top:48px}h3{font-size:15px}p{color:var(--text-secondary)}code,pre{font:13px/1.6 'JetBrains Mono',monospace}pre{padding:18px;background:var(--bg-code);overflow:auto;border-radius:5px}input,select,button{font:inherit;color:var(--text-primary);background:var(--bg-card);border:1px solid var(--border-color);border-radius:5px;padding:10px 14px}button{cursor:pointer}button:hover{border-color:var(--accent-green)}:focus-visible{outline:3px solid var(--accent-green);outline-offset:3px}.filters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}.filters input{flex:1;min-width:200px}article{border-bottom:1px solid var(--border-color)}summary{padding:20px 0;cursor:pointer;display:flex;align-items:center;gap:14px}summary strong{font:13px 'JetBrains Mono',monospace;overflow-wrap:anywhere}.method{color:var(--accent-green);width:55px;font:12px monospace;flex-shrink:0}.badge{margin-left:auto;font-size:12px;color:var(--text-secondary)}details[open]{padding-bottom:24px}.note{border-left:3px solid var(--accent-green);padding-left:18px}.setup{display:grid;grid-template-columns:1fr 1fr;gap:28px}#preview{border:1px solid var(--border-color);padding:22px;margin:24px 0}footer{padding:35px 0;color:var(--text-secondary);font-size:13px}@media(max-width:650px){main{padding:24px 16px}.setup{grid-template-columns:1fr}summary{gap:7px}summary strong{font-size:11px}.badge{display:none}}[hidden]{display:none!important}
+</style></head><body><main><nav><a href="/">Finance MCPs Hub</a><a href="#setup">Connect</a><a href="#reference">Tools</a><a href="https://developers.restream.io/guide/getting-started">Restream API ↗</a></nav><header class="hero"><div class="eyebrow">Streaming & media · MCP reference</div><h1>Restream MCP</h1><p>Prepare broadcasts, inspect recordings and transcripts, and manage Studio assets through 56 documented API tools.</p><p><code>https://restreammcp.agenticledger.ai/mcp</code></p></header><section id="setup"><h2>Connect once. Work through your agent.</h2><p>Provider credentials stay in the Connections Broker. Your first authenticated private tool call returns a consent link when Restream is not connected.</p><div class="setup"><div><h3>Hosted · Streamable HTTP</h3><p>Use a private random 32-byte base64url Bearer identity. Keep it stable and private: it identifies your broker connection. Generate one locally:</p><pre>node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"</pre><p>Set the endpoint above and <code>Authorization: Bearer &lt;your-private-identity&gt;</code> in your MCP client. Gateway principals require an HMAC signature; see the README.</p></div><div><h3>Local · stdio</h3><pre>npm ci
+npm run build
+RESTREAM_MOCK=true npm start</pre><p>For live stdio, configure the broker install identity and <code>RESTREAM_PRINCIPAL</code>. No provider client secret or refresh token belongs in the MCP.</p></div></div><p class="note">Writes are disabled by default. The operator must enable <code>RESTREAM_ENABLE_WRITES=true</code> before any mutation. Chat tools observe incoming events; they cannot send replies. Mock previews never contact Restream.</p></section><section id="reference"><h2>Tool reference</h2><div class="filters"><input id="search" type="search" aria-label="Search tools" placeholder="Search tools, scopes, or capabilities"><select id="access" aria-label="Filter access"><option value="all">All tools</option><option value="false">Read tools</option><option value="true">Write tools</option></select></div><p id="count" aria-live="polite">56 tools</p><div id="preview" hidden><h3>Mock request preview</h3><pre id="request"></pre><button id="copy">Copy request</button><p id="copied" aria-live="polite"></p></div><article data-search="restream_list_platforms List supported streaming platforms. Public endpoint. public" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_platforms</strong><span class="badge">Read</span></summary><p>List supported streaming platforms. Public endpoint.</p><p><code>/v2/platform/all</code> · <a href="https://developers.restream.io/public-api/platforms">Provider reference ↗</a></p><p>Required scope: <code>public</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_platforms&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_platforms">Preview mock request</button></details></article>
+<article data-search="restream_list_ingest_servers List available RTMP ingest servers. Public endpoint. public" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_ingest_servers</strong><span class="badge">Read</span></summary><p>List available RTMP ingest servers. Public endpoint.</p><p><code>/v2/server/all</code> · <a href="https://developers.restream.io/public-api/servers">Provider reference ↗</a></p><p>Required scope: <code>public</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_ingest_servers&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_ingest_servers">Preview mock request</button></details></article>
+<article data-search="restream_get_profile Read the connected Restream profile. profile.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_profile</strong><span class="badge">Read</span></summary><p>Read the connected Restream profile.</p><p><code>/v2/user/profile</code> · <a href="https://developers.restream.io/private-api/profile">Provider reference ↗</a></p><p>Required scope: <code>profile.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;id&quot;: 100,
+    &quot;username&quot;: &quot;mock-user&quot;,
+    &quot;email&quot;: &quot;mock@example.invalid&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_profile">Preview mock request</button></details></article>
+<article data-search="restream_get_selected_ingest Read the selected ingest server ID. channels.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_selected_ingest</strong><span class="badge">Read</span></summary><p>Read the selected ingest server ID.</p><p><code>/v2/user/ingest</code> · <a href="https://developers.restream.io/private-api/selected-ingest">Provider reference ↗</a></p><p>Required scope: <code>channels.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_selected_ingest&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_selected_ingest">Preview mock request</button></details></article>
+<article data-search="restream_get_stream_key Retrieve sensitive encoder stream key and SRT URL; do not publish the result. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_stream_key</strong><span class="badge">Read</span></summary><p>Retrieve sensitive encoder stream key and SRT URL; do not publish the result.</p><p><code>/v2/user/streamKey</code> · <a href="https://developers.restream.io/private-api/stream-key">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code> · Returns sensitive stream credentials or URLs.</p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_stream_key&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_stream_key">Preview mock request</button></details></article>
+<article data-search="restream_get_chat_url Retrieve the sensitive chat embed URL; do not publish the result. chat.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_chat_url</strong><span class="badge">Read</span></summary><p>Retrieve the sensitive chat embed URL; do not publish the result.</p><p><code>/v2/user/webchat/url</code> · <a href="https://developers.restream.io/private-api/chat-url">Provider reference ↗</a></p><p>Required scope: <code>chat.read</code> · Returns sensitive stream credentials or URLs.</p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_chat_url&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_chat_url">Preview mock request</button></details></article>
+<article data-search="restream_list_channels List channels connected to the Restream account. channels.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_channels</strong><span class="badge">Read</span></summary><p>List channels connected to the Restream account.</p><p><code>/v2/user/channels</code> · <a href="https://developers.restream.io/channels/channels">Provider reference ↗</a></p><p>Required scope: <code>channels.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;channels&quot;: [
+      {
+        &quot;id&quot;: 123456,
+        &quot;platformId&quot;: 29,
+        &quot;displayName&quot;: &quot;Mock RTMP&quot;,
+        &quot;channelUrl&quot;: &quot;https://example.invalid/live&quot;
+      }
+    ]
+  }
+}</pre><button class="preview" data-tool="restream_list_channels">Preview mock request</button></details></article>
+<article data-search="restream_get_channel Read a channel by numeric ID. channels.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_channel</strong><span class="badge">Read</span></summary><p>Read a channel by numeric ID.</p><p><code>/v2/user/channels/{channelId}</code> · <a href="https://developers.restream.io/channels/channel">Provider reference ↗</a></p><p>Required scope: <code>channels.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;channelId&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 9007199254740991,
+      &quot;exclusiveMinimum&quot;: 0
+    }
+  },
+  &quot;required&quot;: [
+    &quot;channelId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;channelId&quot;: 1
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_channel&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_channel">Preview mock request</button></details></article>
+<article data-search="restream_create_channel Add a supported manually configured channel. Sends stream credentials to Restream. Writes must be enabled. channels.write" data-write="true"><details><summary><span class="method">POST</span><strong>restream_create_channel</strong><span class="badge">Write</span></summary><p>Add a supported manually configured channel. Sends stream credentials to Restream. Writes must be enabled.</p><p><code>/v2/user/channels</code> · <a href="https://developers.restream.io/channels/channel-add">Provider reference ↗</a></p><p>Required scope: <code>channels.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;platformId&quot;: {
+      &quot;type&quot;: &quot;number&quot;,
+      &quot;enum&quot;: [
+        29,
+        37,
+        49,
+        60,
+        61,
+        68,
+        72,
+        73,
+        74,
+        78,
+        79,
+        80,
+        81,
+        82
+      ]
+    },
+    &quot;streamUrl&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uri&quot;,
+      &quot;maxLength&quot;: 2048
+    },
+    &quot;streamKey&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 500
+    },
+    &quot;displayName&quot;: {
+      &quot;$ref&quot;: &quot;#/properties/streamKey&quot;
+    },
+    &quot;rtmpUsername&quot;: {
+      &quot;$ref&quot;: &quot;#/properties/streamKey&quot;
+    },
+    &quot;rtmpPassword&quot;: {
+      &quot;$ref&quot;: &quot;#/properties/streamKey&quot;
+    },
+    &quot;instagramUsername&quot;: {
+      &quot;$ref&quot;: &quot;#/properties/streamKey&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;platformId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;platformId&quot;: 29,
+  &quot;streamUrl&quot;: &quot;rtmp://example.com/live&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_create_channel&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_create_channel">Preview mock request</button></details></article>
+<article data-search="restream_delete_channel Delete a channel; this can interrupt delivery to upcoming or live destinations. channels.write" data-write="true"><details><summary><span class="method">DELETE</span><strong>restream_delete_channel</strong><span class="badge">Write</span></summary><p>Delete a channel; this can interrupt delivery to upcoming or live destinations.</p><p><code>/v2/user/channels/{channelId}</code> · <a href="https://developers.restream.io/channels/channel-delete">Provider reference ↗</a></p><p>Required scope: <code>channels.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;channelId&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 9007199254740991,
+      &quot;exclusiveMinimum&quot;: 0
+    }
+  },
+  &quot;required&quot;: [
+    &quot;channelId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;channelId&quot;: 1
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;success&quot;: true
+  }
+}</pre><button class="preview" data-tool="restream_delete_channel">Preview mock request</button></details></article>
+<article data-search="restream_list_upcoming_events List upcoming events, optionally filtering source (1 Studio, 2 encoder, 3 video) and scheduled state. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_upcoming_events</strong><span class="badge">Read</span></summary><p>List upcoming events, optionally filtering source (1 Studio, 2 encoder, 3 video) and scheduled state.</p><p><code>/v2/user/events/upcoming</code> · <a href="https://developers.restream.io/events/upcoming-events">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;source&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 1,
+      &quot;maximum&quot;: 3
+    },
+    &quot;scheduled&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_upcoming_events&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_upcoming_events">Preview mock request</button></details></article>
+<article data-search="restream_list_in_progress_events List events currently in progress. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_in_progress_events</strong><span class="badge">Read</span></summary><p>List events currently in progress.</p><p><code>/v2/user/events/in-progress</code> · <a href="https://developers.restream.io/events/in-progress-events">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_in_progress_events&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_in_progress_events">Preview mock request</button></details></article>
+<article data-search="restream_list_event_history List one page of finished and missed events. Increase page to continue; server caps limit at 100. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_event_history</strong><span class="badge">Read</span></summary><p>List one page of finished and missed events. Increase page to continue; server caps limit at 100.</p><p><code>/v2/user/events/history</code> · <a href="https://developers.restream.io/events/events-history">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;page&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 100000,
+      &quot;exclusiveMinimum&quot;: 0,
+      &quot;default&quot;: 1
+    },
+    &quot;limit&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 100,
+      &quot;exclusiveMinimum&quot;: 0,
+      &quot;default&quot;: 20
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_event_history&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_event_history">Preview mock request</button></details></article>
+<article data-search="restream_get_event Read event metadata and destinations. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_event</strong><span class="badge">Read</span></summary><p>Read event metadata and destinations.</p><p><code>/v2/user/events/{eventId}</code> · <a href="https://developers.restream.io/events/event">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_event&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_event">Preview mock request</button></details></article>
+<article data-search="restream_create_event Create Studio, encoder or stored-video event. Does not start streaming or add destinations. stream.write" data-write="true"><details><summary><span class="method">POST</span><strong>restream_create_event</strong><span class="badge">Write</span></summary><p>Create Studio, encoder or stored-video event. Does not start streaming or add destinations.</p><p><code>/v2/user/events/new</code> · <a href="https://developers.restream.io/events/event-create">Provider reference ↗</a></p><p>Required scope: <code>stream.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;streamType&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;studio&quot;,
+        &quot;encoder&quot;,
+        &quot;file&quot;
+      ]
+    },
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 500
+    },
+    &quot;description&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 10000
+    },
+    &quot;scheduledFor&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;date-time&quot;
+    },
+    &quot;fileId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;loopsCount&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 9
+    }
+  },
+  &quot;required&quot;: [
+    &quot;streamType&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;streamType&quot;: &quot;studio&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_create_event&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_create_event">Preview mock request</button></details></article>
+<article data-search="restream_add_event_destination Attach a supported channel; YouTube/Embed Player require title. createEventPost may publish a scheduled broadcast externally. Facebook, Instagram, TikTok, LinkedIn and X are not supported by this endpoint. stream.write" data-write="true"><details><summary><span class="method">POST</span><strong>restream_add_event_destination</strong><span class="badge">Write</span></summary><p>Attach a supported channel; YouTube/Embed Player require title. createEventPost may publish a scheduled broadcast externally. Facebook, Instagram, TikTok, LinkedIn and X are not supported by this endpoint.</p><p><code>/v2/user/events/{eventId}/destinations</code> · <a href="https://developers.restream.io/events/event-destination-add">Provider reference ↗</a></p><p>Required scope: <code>stream.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;channelId&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 9007199254740991,
+      &quot;exclusiveMinimum&quot;: 0
+    },
+    &quot;streamingOrientation&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;horizontal&quot;,
+        &quot;vertical&quot;
+      ]
+    },
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 500
+    },
+    &quot;description&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 10000
+    },
+    &quot;privacyStatus&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;private&quot;,
+        &quot;public&quot;,
+        &quot;unlisted&quot;
+      ]
+    },
+    &quot;videoCategoryId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 128,
+      &quot;pattern&quot;: &quot;^[A-Za-z0-9_-]+$&quot;
+    },
+    &quot;latencyPreference&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;normal&quot;,
+        &quot;low&quot;,
+        &quot;ultraLow&quot;
+      ]
+    },
+    &quot;useEmbeddedClosedCaptions&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    },
+    &quot;createEventPost&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    },
+    &quot;reuseExistingBroadcastId&quot;: {
+      &quot;$ref&quot;: &quot;#/properties/videoCategoryId&quot;
+    },
+    &quot;enableMonetization&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    },
+    &quot;adsFrequency&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;low&quot;,
+        &quot;medium&quot;,
+        &quot;high&quot;
+      ]
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;,
+    &quot;channelId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;,
+  &quot;channelId&quot;: 1
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_add_event_destination&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_add_event_destination">Preview mock request</button></details></article>
+<article data-search="restream_delete_event_destination Detach a destination from a scheduled event. Cannot detach from live or finished events; keeps the channel. stream.write" data-write="true"><details><summary><span class="method">DELETE</span><strong>restream_delete_event_destination</strong><span class="badge">Write</span></summary><p>Detach a destination from a scheduled event. Cannot detach from live or finished events; keeps the channel.</p><p><code>/v2/user/events/{eventId}/destinations/{destinationId}</code> · <a href="https://developers.restream.io/events/event-destination-delete">Provider reference ↗</a></p><p>Required scope: <code>stream.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;destinationId&quot;: {
+      &quot;$ref&quot;: &quot;#/properties/eventId&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;,
+    &quot;destinationId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;,
+  &quot;destinationId&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;success&quot;: true
+  }
+}</pre><button class="preview" data-tool="restream_delete_event_destination">Preview mock request</button></details></article>
+<article data-search="restream_get_event_stream_key Retrieve sensitive event stream key and SRT URL. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_event_stream_key</strong><span class="badge">Read</span></summary><p>Retrieve sensitive event stream key and SRT URL.</p><p><code>/v2/user/events/{eventId}/streamKey</code> · <a href="https://developers.restream.io/events/event-stream-key">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code> · Returns sensitive stream credentials or URLs.</p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_event_stream_key&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_event_stream_key">Preview mock request</button></details></article>
+<article data-search="restream_get_event_srt_keys Retrieve sensitive event SRT keys; requires Business or Enterprise plan. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_event_srt_keys</strong><span class="badge">Read</span></summary><p>Retrieve sensitive event SRT keys; requires Business or Enterprise plan.</p><p><code>/v2/user/events/{eventId}/srt/streamKey</code> · <a href="https://developers.restream.io/events/event-srt-stream-keys">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code> · Returns sensitive stream credentials or URLs.</p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_event_srt_keys&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_event_srt_keys">Preview mock request</button></details></article>
+<article data-search="restream_list_event_recordings List video and audio recordings and expiry times. storage.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_event_recordings</strong><span class="badge">Read</span></summary><p>List video and audio recordings and expiry times.</p><p><code>/v2/user/events/{eventId}/recordings</code> · <a href="https://developers.restream.io/events/events-recordings">Provider reference ↗</a></p><p>Required scope: <code>storage.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_event_recordings&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_event_recordings">Preview mock request</button></details></article>
+<article data-search="restream_list_event_transcripts List generated transcript status and temporary download URLs; does not create transcripts. storage.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_event_transcripts</strong><span class="badge">Read</span></summary><p>List generated transcript status and temporary download URLs; does not create transcripts.</p><p><code>/v2/user/events/{eventId}/recordings/transcriptions</code> · <a href="https://developers.restream.io/events/events-recording-transcriptions">Provider reference ↗</a></p><p>Required scope: <code>storage.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;transcriptions&quot;: [
+      {
+        &quot;id&quot;: &quot;7f3c9a4e-1b2d-4c5f-8a6b-9d0e1f2a3b4c&quot;,
+        &quot;status&quot;: &quot;Completed&quot;,
+        &quot;fileName&quot;: &quot;mock-recording.mp4&quot;,
+        &quot;downloadUrl&quot;: &quot;https://example.invalid/mock-transcript.txt&quot;
+      }
+    ]
+  }
+}</pre><button class="preview" data-tool="restream_list_event_transcripts">Preview mock request</button></details></article>
+<article data-search="restream_get_viewer_analytics Read aggregate and per-channel viewer analytics. 404 can mean no stream analytics. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_viewer_analytics</strong><span class="badge">Read</span></summary><p>Read aggregate and per-channel viewer analytics. 404 can mean no stream analytics.</p><p><code>/v2/user/events/{eventId}/analytics/viewers</code> · <a href="https://developers.restream.io/analytics/event-analytics-viewers">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_viewer_analytics&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_viewer_analytics">Preview mock request</button></details></article>
+<article data-search="restream_get_chat_analytics Read aggregate and per-channel chat metrics. stream.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_chat_analytics</strong><span class="badge">Read</span></summary><p>Read aggregate and per-channel chat metrics.</p><p><code>/v2/user/events/{eventId}/analytics/messages</code> · <a href="https://developers.restream.io/analytics/event-analytics-messages">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_chat_analytics&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_chat_analytics">Preview mock request</button></details></article>
+<article data-search="restream_get_event_chat_history Read a page of chat messages. Pass either pageToken or timestamp, never both. Return cursors are preserved. chat.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_event_chat_history</strong><span class="badge">Read</span></summary><p>Read a page of chat messages. Pass either pageToken or timestamp, never both. Return cursors are preserved.</p><p><code>/v2/user/events/{eventId}/chat/history</code> · <a href="https://developers.restream.io/events/event-chat-history">Provider reference ↗</a></p><p>Required scope: <code>chat.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;pageSize&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 1000,
+      &quot;exclusiveMinimum&quot;: 0,
+      &quot;default&quot;: 100
+    },
+    &quot;pageToken&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 2048
+    },
+    &quot;timestamp&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 9007199254740991
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_event_chat_history&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_event_chat_history">Preview mock request</button></details></article>
+<article data-search="restream_get_chat_export_url Generate a one-time chat history download link; does not fetch external content. chat.read" data-write="false"><details><summary><span class="method">POST</span><strong>restream_get_chat_export_url</strong><span class="badge">Read</span></summary><p>Generate a one-time chat history download link; does not fetch external content.</p><p><code>/v2/user/events/{eventId}/chat/history/download-url</code> · <a href="https://developers.restream.io/events/events-chat-history-download-url">Provider reference ↗</a></p><p>Required scope: <code>chat.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_chat_export_url&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_chat_export_url">Preview mock request</button></details></article>
+<article data-search="restream_get_recording_download_url Generate a temporary download URL for a recording filename returned by list_event_recordings. storage.read" data-write="false"><details><summary><span class="method">POST</span><strong>restream_get_recording_download_url</strong><span class="badge">Read</span></summary><p>Generate a temporary download URL for a recording filename returned by list_event_recordings.</p><p><code>/v2/user/events/{eventId}/recordings/download-url</code> · <a href="https://developers.restream.io/events/events-recording-download-url">Provider reference ↗</a></p><p>Required scope: <code>storage.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;eventId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;fileName&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 500
+    }
+  },
+  &quot;required&quot;: [
+    &quot;eventId&quot;,
+    &quot;fileName&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;eventId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;,
+  &quot;fileName&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_recording_download_url&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_recording_download_url">Preview mock request</button></details></article>
+<article data-search="restream_list_storage_files List video storage files and processing status. storage.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_storage_files</strong><span class="badge">Read</span></summary><p>List video storage files and processing status.</p><p><code>/v2/user/storage/files</code> · <a href="https://developers.restream.io/storage/storage-files">Provider reference ↗</a></p><p>Required scope: <code>storage.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_storage_files&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_storage_files">Preview mock request</button></details></article>
+<article data-search="restream_get_storage_file Read a video storage file by ID. storage.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_storage_file</strong><span class="badge">Read</span></summary><p>Read a video storage file by ID.</p><p><code>/v2/user/storage/files/{fileId}</code> · <a href="https://developers.restream.io/storage/storage-file">Provider reference ↗</a></p><p>Required scope: <code>storage.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;fileId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 128,
+      &quot;pattern&quot;: &quot;^[A-Za-z0-9_-]+$&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;fileId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;fileId&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_storage_file&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_storage_file">Preview mock request</button></details></article>
+<article data-search="restream_get_storage_download_url Generate a temporary storage file download URL. storage.read" data-write="false"><details><summary><span class="method">POST</span><strong>restream_get_storage_download_url</strong><span class="badge">Read</span></summary><p>Generate a temporary storage file download URL.</p><p><code>/v2/user/storage/files/{fileId}/download-url</code> · <a href="https://developers.restream.io/storage/storage-file-download-url">Provider reference ↗</a></p><p>Required scope: <code>storage.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;fileId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 128,
+      &quot;pattern&quot;: &quot;^[A-Za-z0-9_-]+$&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;fileId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;fileId&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_storage_download_url&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_storage_download_url">Preview mock request</button></details></article>
+<article data-search="restream_list_clip_projects List a page of clip projects; use returned nextCursor to continue. clips.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_clip_projects</strong><span class="badge">Read</span></summary><p>List a page of clip projects; use returned nextCursor to continue.</p><p><code>/v2/user/clips/projects</code> · <a href="https://developers.restream.io/clips/clips-projects">Provider reference ↗</a></p><p>Required scope: <code>clips.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;limit&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: -9007199254740991,
+      &quot;maximum&quot;: 100,
+      &quot;exclusiveMinimum&quot;: 0,
+      &quot;default&quot;: 20
+    },
+    &quot;cursor&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 2048
+    },
+    &quot;sortBy&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;CreatedAt&quot;,
+        &quot;LastActivity&quot;
+      ]
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_clip_projects&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_clip_projects">Preview mock request</button></details></article>
+<article data-search="restream_get_clip_project Read clip generation progress, clips and posting history. clips.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_clip_project</strong><span class="badge">Read</span></summary><p>Read clip generation progress, clips and posting history.</p><p><code>/v2/user/clips/projects/{projectId}</code> · <a href="https://developers.restream.io/clips/clips-project-details">Provider reference ↗</a></p><p>Required scope: <code>clips.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;projectId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 128,
+      &quot;pattern&quot;: &quot;^[A-Za-z0-9_-]+$&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;projectId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;projectId&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_clip_project&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_clip_project">Preview mock request</button></details></article>
+<article data-search="restream_get_clip_download_url Retrieve a temporary clip download URL. clips.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_clip_download_url</strong><span class="badge">Read</span></summary><p>Retrieve a temporary clip download URL.</p><p><code>/v2/user/clips/{clipId}/download</code> · <a href="https://developers.restream.io/clips/clips-download">Provider reference ↗</a></p><p>Required scope: <code>clips.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;clipId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 128,
+      &quot;pattern&quot;: &quot;^[A-Za-z0-9_-]+$&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;clipId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;clipId&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_clip_download_url&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_clip_download_url">Preview mock request</button></details></article>
+<article data-search="restream_create_clip_project Generate clips asynchronously from a stored file, past event or public video URL. Can consume plan allowance; forceReprocess regenerates clips. Poll get_clip_project. clips.write" data-write="true"><details><summary><span class="method">POST</span><strong>restream_create_clip_project</strong><span class="badge">Write</span></summary><p>Generate clips asynchronously from a stored file, past event or public video URL. Can consume plan allowance; forceReprocess regenerates clips. Poll get_clip_project.</p><p><code>/v2/user/clips/projects</code> · <a href="https://developers.restream.io/clips/clips-project-create">Provider reference ↗</a></p><p>Required scope: <code>clips.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;sourceType&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;VideoStorageFile&quot;,
+        &quot;Event&quot;,
+        &quot;PublicUrl&quot;
+      ]
+    },
+    &quot;videoStorageFileId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;eventId&quot;: {
+      &quot;$ref&quot;: &quot;#/properties/videoStorageFileId&quot;
+    },
+    &quot;publicUrl&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uri&quot;,
+      &quot;maxLength&quot;: 2048
+    },
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 500
+    },
+    &quot;singleClipMode&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    },
+    &quot;forceReprocess&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    },
+    &quot;selectedTimeRange&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;startOffsetSeconds&quot;: {
+          &quot;type&quot;: &quot;number&quot;,
+          &quot;minimum&quot;: 0
+        },
+        &quot;endOffsetSeconds&quot;: {
+          &quot;type&quot;: &quot;number&quot;,
+          &quot;exclusiveMinimum&quot;: 0
+        }
+      },
+      &quot;required&quot;: [
+        &quot;startOffsetSeconds&quot;,
+        &quot;endOffsetSeconds&quot;
+      ],
+      &quot;additionalProperties&quot;: false
+    }
+  },
+  &quot;required&quot;: [
+    &quot;sourceType&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;sourceType&quot;: &quot;VideoStorageFile&quot;,
+  &quot;videoStorageFileId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_create_clip_project&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_create_clip_project">Preview mock request</button></details></article>
+<article data-search="restream_list_brands List Studio brands. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_brands</strong><span class="badge">Read</span></summary><p>List Studio brands.</p><p><code>/v2/user/studio/brands</code> · <a href="https://developers.restream.io/studio/brands/studio-brands">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_brands&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_brands">Preview mock request</button></details></article>
+<article data-search="restream_list_fonts List Studio fonts. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_fonts</strong><span class="badge">Read</span></summary><p>List Studio fonts.</p><p><code>/v2/user/studio/fonts</code> · <a href="https://developers.restream.io/studio/fonts/studio-fonts">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_fonts&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_fonts">Preview mock request</button></details></article>
+<article data-search="restream_list_countdown_music List Studio countdown music. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_countdown_music</strong><span class="badge">Read</span></summary><p>List Studio countdown music.</p><p><code>/v2/user/studio/audio/countdown-music</code> · <a href="https://developers.restream.io/studio/audio/studio-audio-countdown-music">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_countdown_music&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_countdown_music">Preview mock request</button></details></article>
+<article data-search="restream_list_audio_backgrounds List Studio audio backgrounds. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_audio_backgrounds</strong><span class="badge">Read</span></summary><p>List Studio audio backgrounds.</p><p><code>/v2/user/studio/audio-backgrounds</code> · <a href="https://developers.restream.io/studio/audio/studio-audio-backgrounds">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {},
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_audio_backgrounds&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_audio_backgrounds">Preview mock request</button></details></article>
+<article data-search="restream_list_captions List Studio captions, optionally by brand. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_captions</strong><span class="badge">Read</span></summary><p>List Studio captions, optionally by brand.</p><p><code>/v2/user/studio/captions</code> · <a href="https://developers.restream.io/studio/captions/studio-captions">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;brandId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_captions&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_captions">Preview mock request</button></details></article>
+<article data-search="restream_get_caption Read a Studio caption. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_caption</strong><span class="badge">Read</span></summary><p>Read a Studio caption.</p><p><code>/v2/user/studio/captions/{captionId}</code> · <a href="https://developers.restream.io/studio/captions/studio-caption">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;captionId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;captionId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;captionId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_caption&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_caption">Preview mock request</button></details></article>
+<article data-search="restream_create_caption Create a reusable Studio caption. Does not toggle it on screen. studio.write" data-write="true"><details><summary><span class="method">POST</span><strong>restream_create_caption</strong><span class="badge">Write</span></summary><p>Create a reusable Studio caption. Does not toggle it on screen.</p><p><code>/v2/user/studio/captions</code> · <a href="https://developers.restream.io/studio/captions/studio-caption-create">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;brandId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;text&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 10000
+    },
+    &quot;secondaryText&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;maxLength&quot;: 10000
+    }
+  },
+  &quot;required&quot;: [
+    &quot;brandId&quot;,
+    &quot;text&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;brandId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;,
+  &quot;text&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_create_caption&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_create_caption">Preview mock request</button></details></article>
+<article data-search="restream_update_caption Update a Studio caption. studio.write" data-write="true"><details><summary><span class="method">PATCH</span><strong>restream_update_caption</strong><span class="badge">Write</span></summary><p>Update a Studio caption.</p><p><code>/v2/user/studio/captions/{captionId}</code> · <a href="https://developers.restream.io/studio/captions/studio-caption-update">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;captionId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;text&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 10000
+    },
+    &quot;secondaryText&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;maxLength&quot;: 10000
+    }
+  },
+  &quot;required&quot;: [
+    &quot;captionId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;captionId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_update_caption&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_update_caption">Preview mock request</button></details></article>
+<article data-search="restream_delete_caption Permanently delete a Studio caption. studio.write" data-write="true"><details><summary><span class="method">DELETE</span><strong>restream_delete_caption</strong><span class="badge">Write</span></summary><p>Permanently delete a Studio caption.</p><p><code>/v2/user/studio/captions/{captionId}</code> · <a href="https://developers.restream.io/studio/captions/studio-caption-delete">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;captionId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;captionId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;captionId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;success&quot;: true
+  }
+}</pre><button class="preview" data-tool="restream_delete_caption">Preview mock request</button></details></article>
+<article data-search="restream_list_tickers List Studio tickers, optionally by brand. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_tickers</strong><span class="badge">Read</span></summary><p>List Studio tickers, optionally by brand.</p><p><code>/v2/user/studio/tickers</code> · <a href="https://developers.restream.io/studio/tickers/studio-tickers">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;brandId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_tickers&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_tickers">Preview mock request</button></details></article>
+<article data-search="restream_get_ticker Read a Studio ticker. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_ticker</strong><span class="badge">Read</span></summary><p>Read a Studio ticker.</p><p><code>/v2/user/studio/tickers/{tickerId}</code> · <a href="https://developers.restream.io/studio/tickers/studio-ticker">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;tickerId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;tickerId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;tickerId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_ticker&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_ticker">Preview mock request</button></details></article>
+<article data-search="restream_create_ticker Create a reusable Studio ticker. Does not toggle it on screen. studio.write" data-write="true"><details><summary><span class="method">POST</span><strong>restream_create_ticker</strong><span class="badge">Write</span></summary><p>Create a reusable Studio ticker. Does not toggle it on screen.</p><p><code>/v2/user/studio/tickers</code> · <a href="https://developers.restream.io/studio/tickers/studio-ticker-create">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;brandId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;text&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 10000
+    }
+  },
+  &quot;required&quot;: [
+    &quot;brandId&quot;,
+    &quot;text&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;brandId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;,
+  &quot;text&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_create_ticker&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_create_ticker">Preview mock request</button></details></article>
+<article data-search="restream_update_ticker Update a Studio ticker. studio.write" data-write="true"><details><summary><span class="method">PATCH</span><strong>restream_update_ticker</strong><span class="badge">Write</span></summary><p>Update a Studio ticker.</p><p><code>/v2/user/studio/tickers/{tickerId}</code> · <a href="https://developers.restream.io/studio/tickers/studio-ticker-update">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;tickerId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;text&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 10000
+    }
+  },
+  &quot;required&quot;: [
+    &quot;tickerId&quot;,
+    &quot;text&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;tickerId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;,
+  &quot;text&quot;: &quot;example&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_update_ticker&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_update_ticker">Preview mock request</button></details></article>
+<article data-search="restream_delete_ticker Permanently delete a Studio ticker. studio.write" data-write="true"><details><summary><span class="method">DELETE</span><strong>restream_delete_ticker</strong><span class="badge">Write</span></summary><p>Permanently delete a Studio ticker.</p><p><code>/v2/user/studio/tickers/{tickerId}</code> · <a href="https://developers.restream.io/studio/tickers/studio-ticker-delete">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;tickerId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;tickerId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;tickerId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;success&quot;: true
+  }
+}</pre><button class="preview" data-tool="restream_delete_ticker">Preview mock request</button></details></article>
+<article data-search="restream_reorder_tickers Set the order of Studio tickers. studio.write" data-write="true"><details><summary><span class="method">PATCH</span><strong>restream_reorder_tickers</strong><span class="badge">Write</span></summary><p>Set the order of Studio tickers.</p><p><code>/v2/user/studio/tickers/order</code> · <a href="https://developers.restream.io/studio/tickers/studio-ticker-reorder">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;ids&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;format&quot;: &quot;uuid&quot;
+      },
+      &quot;minItems&quot;: 1,
+      &quot;maxItems&quot;: 1000
+    }
+  },
+  &quot;required&quot;: [
+    &quot;ids&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;ids&quot;: [
+    &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+  ]
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_reorder_tickers&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_reorder_tickers">Preview mock request</button></details></article>
+<article data-search="restream_list_qr_codes List Studio qr-codes, optionally by brand. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_list_qr_codes</strong><span class="badge">Read</span></summary><p>List Studio qr-codes, optionally by brand.</p><p><code>/v2/user/studio/qr-codes</code> · <a href="https://developers.restream.io/studio/qr-codes/studio-qr-codes">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;brandId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_list_qr_codes&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_list_qr_codes">Preview mock request</button></details></article>
+<article data-search="restream_get_qr_code Read a Studio qr code. studio.read" data-write="false"><details><summary><span class="method">GET</span><strong>restream_get_qr_code</strong><span class="badge">Read</span></summary><p>Read a Studio qr code.</p><p><code>/v2/user/studio/qr-codes/{qrCodeId}</code> · <a href="https://developers.restream.io/studio/qr-codes/studio-qr-code">Provider reference ↗</a></p><p>Required scope: <code>studio.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;qrCodeId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;qrCodeId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;qrCodeId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_get_qr_code&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_get_qr_code">Preview mock request</button></details></article>
+<article data-search="restream_create_qr_code Create a reusable Studio qr code. Does not toggle it on screen. studio.write" data-write="true"><details><summary><span class="method">POST</span><strong>restream_create_qr_code</strong><span class="badge">Write</span></summary><p>Create a reusable Studio qr code. Does not toggle it on screen.</p><p><code>/v2/user/studio/qr-codes</code> · <a href="https://developers.restream.io/studio/qr-codes/studio-qr-code-create">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;brandId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 500
+    },
+    &quot;link&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uri&quot;,
+      &quot;maxLength&quot;: 2048
+    },
+    &quot;shouldShowTitle&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;brandId&quot;,
+    &quot;title&quot;,
+    &quot;link&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;brandId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;,
+  &quot;title&quot;: &quot;example&quot;,
+  &quot;link&quot;: &quot;https://example.com&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_create_qr_code&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_create_qr_code">Preview mock request</button></details></article>
+<article data-search="restream_update_qr_code Update a Studio qr code. studio.write" data-write="true"><details><summary><span class="method">PATCH</span><strong>restream_update_qr_code</strong><span class="badge">Write</span></summary><p>Update a Studio qr code.</p><p><code>/v2/user/studio/qr-codes/{qrCodeId}</code> · <a href="https://developers.restream.io/studio/qr-codes/studio-qr-code-update">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;qrCodeId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    },
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;minLength&quot;: 1,
+      &quot;maxLength&quot;: 500
+    },
+    &quot;link&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uri&quot;,
+      &quot;maxLength&quot;: 2048
+    },
+    &quot;shouldShowTitle&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;qrCodeId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;qrCodeId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_update_qr_code&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_update_qr_code">Preview mock request</button></details></article>
+<article data-search="restream_delete_qr_code Permanently delete a Studio qr code. studio.write" data-write="true"><details><summary><span class="method">DELETE</span><strong>restream_delete_qr_code</strong><span class="badge">Write</span></summary><p>Permanently delete a Studio qr code.</p><p><code>/v2/user/studio/qr-codes/{qrCodeId}</code> · <a href="https://developers.restream.io/studio/qr-codes/studio-qr-code-delete">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;qrCodeId&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uuid&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;qrCodeId&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;qrCodeId&quot;: &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;success&quot;: true
+  }
+}</pre><button class="preview" data-tool="restream_delete_qr_code">Preview mock request</button></details></article>
+<article data-search="restream_reorder_qr_codes Set the order of Studio qr-codes. studio.write" data-write="true"><details><summary><span class="method">PATCH</span><strong>restream_reorder_qr_codes</strong><span class="badge">Write</span></summary><p>Set the order of Studio qr-codes.</p><p><code>/v2/user/studio/qr-codes/order</code> · <a href="https://developers.restream.io/studio/qr-codes/studio-qr-code-reorder">Provider reference ↗</a></p><p>Required scope: <code>studio.write</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;ids&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;format&quot;: &quot;uuid&quot;
+      },
+      &quot;minItems&quot;: 1,
+      &quot;maxItems&quot;: 1000
+    }
+  },
+  &quot;required&quot;: [
+    &quot;ids&quot;
+  ],
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{
+  &quot;ids&quot;: [
+    &quot;2527849f-f961-4b1d-8ae0-8eae4f068327&quot;
+  ]
+}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;fixture&quot;: true,
+    &quot;tool&quot;: &quot;restream_reorder_qr_codes&quot;,
+    &quot;notice&quot;: &quot;Synthetic offline response; not live provider data.&quot;
+  }
+}</pre><button class="preview" data-tool="restream_reorder_qr_codes">Preview mock request</button></details></article>
+<article data-search="restream_observe_chat Collect a bounded window of chat WebSocket events, then disconnect. No background subscription or message sending. chat.read" data-write="false"><details><summary><span class="method">WS</span><strong>restream_observe_chat</strong><span class="badge">Read</span></summary><p>Collect a bounded window of chat WebSocket events, then disconnect. No background subscription or message sending.</p><p><code>Bounded WebSocket observation</code> · <a href="https://developers.restream.io/chat/getting-started">Provider reference ↗</a></p><p>Required scope: <code>chat.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;durationSeconds&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 1,
+      &quot;maximum&quot;: 20,
+      &quot;default&quot;: 5
+    },
+    &quot;maxEvents&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 1,
+      &quot;maximum&quot;: 100,
+      &quot;default&quot;: 25
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;events&quot;: [],
+    &quot;truncated&quot;: false
+  }
+}</pre><button class="preview" data-tool="restream_observe_chat">Preview mock request</button></details></article>
+<article data-search="restream_observe_streaming Collect a bounded window of streaming WebSocket events, then disconnect. No background subscription or message sending. stream.read" data-write="false"><details><summary><span class="method">WS</span><strong>restream_observe_streaming</strong><span class="badge">Read</span></summary><p>Collect a bounded window of streaming WebSocket events, then disconnect. No background subscription or message sending.</p><p><code>Bounded WebSocket observation</code> · <a href="https://developers.restream.io/private-api/streaming-updates">Provider reference ↗</a></p><p>Required scope: <code>stream.read</code></p><h3>Input schema</h3><pre>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;durationSeconds&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 1,
+      &quot;maximum&quot;: 20,
+      &quot;default&quot;: 5
+    },
+    &quot;maxEvents&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 1,
+      &quot;maximum&quot;: 100,
+      &quot;default&quot;: 25
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;
+}</pre><h3>Example arguments</h3><pre>{}</pre><h3>Mock output</h3><pre>{
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;mode&quot;: &quot;mock&quot;,
+  &quot;data&quot;: {
+    &quot;events&quot;: [],
+    &quot;truncated&quot;: false
+  }
+}</pre><button class="preview" data-tool="restream_observe_streaming">Preview mock request</button></details></article></section><section><h2>Limits and verification</h2><p>REST reads use a 15-second timeout and a 2 MB response cap. Paginated tools return one page with provider cursors. WebSocket tools observe up to 20 seconds or 100 messages, then close. Account plans and granted scopes determine which calls succeed.</p><p>Offline fixtures are synthetic. The initial release verifies protocol behavior and connection handling separately from live provider operations. No live write operations are run during release validation. Transcript tools return available download links; they do not generate or fetch transcript files.</p><p>The public REST API does not document all actions available through Restream’s official MCP, including editing or deleting events. This server exposes documented APIs only.</p></section><footer>Finance MCPs Hub · Restream API documentation checked October 9, 2026.</footer></main><script>
+const tools=[{"name":"restream_list_platforms","args":{}},{"name":"restream_list_ingest_servers","args":{}},{"name":"restream_get_profile","args":{}},{"name":"restream_get_selected_ingest","args":{}},{"name":"restream_get_stream_key","args":{}},{"name":"restream_get_chat_url","args":{}},{"name":"restream_list_channels","args":{}},{"name":"restream_get_channel","args":{"channelId":1}},{"name":"restream_create_channel","args":{"platformId":29,"streamUrl":"rtmp://example.com/live"}},{"name":"restream_delete_channel","args":{"channelId":1}},{"name":"restream_list_upcoming_events","args":{}},{"name":"restream_list_in_progress_events","args":{}},{"name":"restream_list_event_history","args":{}},{"name":"restream_get_event","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_create_event","args":{"streamType":"studio"}},{"name":"restream_add_event_destination","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327","channelId":1}},{"name":"restream_delete_event_destination","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327","destinationId":"example"}},{"name":"restream_get_event_stream_key","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_get_event_srt_keys","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_list_event_recordings","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_list_event_transcripts","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_get_viewer_analytics","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_get_chat_analytics","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_get_event_chat_history","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_get_chat_export_url","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_get_recording_download_url","args":{"eventId":"2527849f-f961-4b1d-8ae0-8eae4f068327","fileName":"example"}},{"name":"restream_list_storage_files","args":{}},{"name":"restream_get_storage_file","args":{"fileId":"example"}},{"name":"restream_get_storage_download_url","args":{"fileId":"example"}},{"name":"restream_list_clip_projects","args":{}},{"name":"restream_get_clip_project","args":{"projectId":"example"}},{"name":"restream_get_clip_download_url","args":{"clipId":"example"}},{"name":"restream_create_clip_project","args":{"sourceType":"VideoStorageFile","videoStorageFileId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_list_brands","args":{}},{"name":"restream_list_fonts","args":{}},{"name":"restream_list_countdown_music","args":{}},{"name":"restream_list_audio_backgrounds","args":{}},{"name":"restream_list_captions","args":{}},{"name":"restream_get_caption","args":{"captionId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_create_caption","args":{"brandId":"2527849f-f961-4b1d-8ae0-8eae4f068327","text":"example"}},{"name":"restream_update_caption","args":{"captionId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_delete_caption","args":{"captionId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_list_tickers","args":{}},{"name":"restream_get_ticker","args":{"tickerId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_create_ticker","args":{"brandId":"2527849f-f961-4b1d-8ae0-8eae4f068327","text":"example"}},{"name":"restream_update_ticker","args":{"tickerId":"2527849f-f961-4b1d-8ae0-8eae4f068327","text":"example"}},{"name":"restream_delete_ticker","args":{"tickerId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_reorder_tickers","args":{"ids":["2527849f-f961-4b1d-8ae0-8eae4f068327"]}},{"name":"restream_list_qr_codes","args":{}},{"name":"restream_get_qr_code","args":{"qrCodeId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_create_qr_code","args":{"brandId":"2527849f-f961-4b1d-8ae0-8eae4f068327","title":"example","link":"https://example.com"}},{"name":"restream_update_qr_code","args":{"qrCodeId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_delete_qr_code","args":{"qrCodeId":"2527849f-f961-4b1d-8ae0-8eae4f068327"}},{"name":"restream_reorder_qr_codes","args":{"ids":["2527849f-f961-4b1d-8ae0-8eae4f068327"]}},{"name":"restream_observe_chat","args":{}},{"name":"restream_observe_streaming","args":{}}];
+const search=document.getElementById('search'),access=document.getElementById('access');
+function filter(){let count=0;document.querySelectorAll('article').forEach(a=>{a.hidden=!a.dataset.search.toLowerCase().includes(search.value.toLowerCase())||(access.value!=='all'&&access.value!==a.dataset.write);if(!a.hidden)count++;});document.getElementById('count').textContent=count+' tools';}search.addEventListener('input',filter);access.addEventListener('change',filter);
+document.querySelectorAll('.preview').forEach(b=>b.addEventListener('click',()=>{const t=tools.find(t=>t.name===b.dataset.tool);document.getElementById('request').textContent=JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:t.name,arguments:t.args}},null,2);document.getElementById('preview').hidden=false;document.getElementById('preview').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}));document.getElementById('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(document.getElementById('request').textContent);document.getElementById('copied').textContent='Copied';}catch{document.getElementById('copied').textContent='Select the request text to copy.';}});
+</script></body></html>
